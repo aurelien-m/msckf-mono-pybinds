@@ -116,11 +116,33 @@ Eigen::Matrix<double, 4, 1> get_imu_state_q_null(msckf_mono::imuState<double> &i
     return imu.q_IG_null.coeffs();
 }
 
+void set_imu_reading_gyro(msckf_mono::imuReading<double> &imu, Eigen::Matrix<double, 3, 1> gyro)
+{
+    imu.omega = msckf_mono::GyroscopeReading<double>(gyro(0), gyro(1), gyro(2));
+}
+
+Eigen::Matrix<double, 3, 1> get_imu_reading_gyro(msckf_mono::imuReading<double> &imu)
+{
+    return imu.omega;
+}
+
+void set_imu_reading_a(msckf_mono::imuReading<double> &imu, Eigen::Matrix<double, 3, 1> a)
+{
+    imu.a = msckf_mono::AccelerometerReading<double>(a(0), a(1), a(2));
+}
+
+Eigen::Matrix<double, 3, 1> get_imu_reading_a(msckf_mono::imuReading<double> &imu)
+{
+    return imu.a;
+}
+
 PYBIND11_MODULE(msckf, m)
 {
     py::class_<msckf_mono::MSCKF<double>>(m, "MSCKF")
         .def(py::init<>())
-        .def("initialize", &msckf_mono::MSCKF<double>::initialize);
+        .def("initialize", &msckf_mono::MSCKF<double>::initialize)
+        .def("propagate", &msckf_mono::MSCKF<double>::propagate)
+        .def("get_imu_state", &msckf_mono::MSCKF<double>::getImuState);
 
     py::class_<msckf_mono::Camera<double>>(m, "Camera")
         .def(py::init<>())
@@ -160,4 +182,10 @@ PYBIND11_MODULE(msckf, m)
         .def_property("v_I_G_null", &get_imu_state_v_null, &set_imu_state_v_null)
         .def_property("q_IG", &get_imu_state_q, &set_imu_state_q)
         .def_property("q_IG_null", &get_imu_state_q_null, &set_imu_state_q_null);
+    
+    py::class_<msckf_mono::imuReading<double>>(m, "ImuReading")
+        .def(py::init<>())
+        .def_property("omega", &get_imu_reading_gyro, &set_imu_reading_gyro)
+        .def_property("a", &get_imu_reading_a, &set_imu_reading_a)
+        .def_readwrite("dT", &msckf_mono::imuReading<double>::dT);
 }
