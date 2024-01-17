@@ -3,7 +3,7 @@ project(msckf)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(pybind11 REQUIRED)
-find_package(Eigen3 REQUIRED)
+find_package(Eigen3 REQUIRED NO_MODULE)
 find_package(Boost REQUIRED)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -16,4 +16,4 @@ set(HEADER_FILES
 
 pybind11_add_module(msckf src/bindings.cpp ${HEADER_FILES})
 
-target_link_libraries(msckf PUBLIC)
+target_link_libraries(msckf PUBLIC Eigen3::Eigen)

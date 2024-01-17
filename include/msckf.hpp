@@ -12,11 +12,11 @@
 #include <stdexcept>
 #include <vector>
 
-#include <eigen3/Eigen/Dense>
-#include <eigen3/Eigen/Geometry>
-#include <eigen3/Eigen/StdVector>
+#include <Eigen/Dense>
+#include <Eigen/Geometry>
+#include <Eigen/StdVector>
 #include <boost/math/distributions/chi_squared.hpp>
-#include <eigen3/unsupported/Eigen/MatrixFunctions>
+#include <unsupported/Eigen/MatrixFunctions>
 
 #include <matrix_utils.hpp>
 #include <types.hpp>

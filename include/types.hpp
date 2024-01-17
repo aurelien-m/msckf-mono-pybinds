@@ -1,8 +1,8 @@
 #ifndef MSCKF_MONO_SENSOR_TYPES_H_
 #define MSCKF_MONO_SENSOR_TYPES_H_
 
-#include <eigen3/Eigen/Dense>
-#include <eigen3/Eigen/Geometry>
+#include <Eigen/Dense>
+#include <Eigen/Geometry>
 #include <vector>
 
 namespace msckf_mono
